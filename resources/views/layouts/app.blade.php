@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{!! trans('message.title') !!}</title>
+    <title>@lang('message.title')</title>
     {{ Html::style(asset('css/app.css')) }}
-    {{ Html::style(asset('css/main.css')) }}
+    {{ Html::style(asset('css/all.css')) }}
     {{ Html::style(asset('css/font-awesome.css')) }}
 </head>
 <body>
@@ -15,20 +15,20 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('home') }}">
-                    {!! trans('message.brand') !!}
+                    @lang('message.brand')
                 </a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a href="#" class="nav-link">{!! trans('message.about') !!}</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">{!! trans('message.contact') !!}</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">@lang('message.about')</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">@lang('message.contact')</a></li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ trans('message.login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">@lang('message.login')</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ trans('message.register') }}</a>
+                                <a class="nav-link" href="{{ route('register') }}">@lang('message.register')</a>
                             </li>
                         @else
                             <li class="nav-item dropdown">
@@ -36,14 +36,14 @@
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}">
-                                        {{ trans('message.profile') }}
+                                    <a class="dropdown-item" href="{{ route('user.show', Auth::user()->id) }}">
+                                        @lang('message.profile')
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}">
-                                        {{ trans('message.mytravel') }}
+                                        @lang('message.mytravel')
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" id="logout">
-                                        {{ trans('message.logout') }}
+                                        @lang('message.logout')
                                     </a>
                                     {!! Form::open(['route' => 'logout', 'id' => 'logout-form']) !!}
                                     {!! Form::close() !!}

@@ -38,6 +38,7 @@ $factory->define(App\Models\Tour::class, function (Faker $faker) {
         'start_date' => $faker->date(),
         'price' => $faker->randomFloat(2, 100, 1000),
         'desciption' => $faker->text,
+        'image' => $faker->imageUrl(),
     ];
 });
 

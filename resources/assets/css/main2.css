@@ -1,0 +1,36 @@
+.tour-detail {
+    padding: 5em 7em;
+}
+
+.tour-box {
+    background-color: white;
+}
+
+.panel-tour {
+    font-size: 1.5em;
+    padding: 2em 0;
+    border-bottom: 1px solid #999999;
+}
+
+h2 {
+    color: #E25D33;
+    font-weight: bold;
+}
+
+h3 {
+    color: #4c3327;
+    font-weight: bold;
+    padding-top: 1em;
+}
+
+.card-tour {
+    margin: 7em 12em;
+}
+
+.card-tour .card-header {
+    background-color: #E25D33;
+}
+
+.col-profile {
+    background-color: white;
+}

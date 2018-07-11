@@ -18,6 +18,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .version();
 mix.js('resources/assets/js/main.js', 'public/js/main.js')
 mix.styles([
-    'resources/assets/css/main.css'
-], 'public/css/main.css');
+    'resources/assets/css/main.css',
+    'resources/assets/css/main2.css'
+], 'public/css/all.css');
 mix.copyDirectory('resources/assets/img', 'public/img');

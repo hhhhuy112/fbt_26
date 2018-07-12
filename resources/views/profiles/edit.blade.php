@@ -6,9 +6,9 @@
         @include('layouts.sidebar')
         <div class="col-sm-9">
             <div class="card card-profile">
-                <div class="card-header text-center">{{ trans('message.edit-profile') }}</div>
+                <div class="card-header text-center">@lang('message.edit-profile')</div>
                 <div class="card-body">
-                    {!! Form::open(['url' => '#']) !!}
+                    {!! Form::model($user, ['route' => ['user.update', $user->id], 'method' => 'put']) !!}
                         @include('forms.profile')
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

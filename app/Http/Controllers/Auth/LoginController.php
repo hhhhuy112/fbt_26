@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Socialite;
+use App\SocialAccountService;
 
 class LoginController extends Controller
 {
@@ -36,4 +38,21 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function redirectToProvider($social)
+    {
+        return Socialite::driver($social)->redirect();
+    }
+
+    public function handleProviderCallback(SocialAccountService $service, $social)
+    {
+        $user = $service->createOrGetUser(Socialite::driver($social)->user(), $social);
+
+        auth()->login($user);
+
+        return redirect()->route('home');
+    }
+
+
+
 }

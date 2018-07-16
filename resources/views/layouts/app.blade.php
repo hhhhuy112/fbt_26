@@ -58,5 +58,6 @@
     </div>
     {{ Html::script(asset('js/app.js')) }}
     {{ Html::script(asset('js/main.js')) }}
+    {{ Html::script(asset('js/main2.js')) }}
 </body>
 </html>

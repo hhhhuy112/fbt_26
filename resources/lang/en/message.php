@@ -55,4 +55,13 @@ return [
     'edit-tour' => 'Edit Tour',
     'update-tour' => 'Update Tour',
     'edit' => 'Edit',
+    'rate' => 'Rate',
+    'booking' => 'Booking',
+    'review' => 'Review',
+    'date-booking' => 'Booking date',
+    'passengers-booking' => 'Number of Passengers',
+    'package-option' => 'Package Option',
+    'total' => 'Total Price',
+    'review' => 'Reviews',
+    'per-person' => 'Per Person'
 ];

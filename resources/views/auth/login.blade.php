@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header text-center">{{ trans('message.login') }}</div>
+                    <div class="card-header text-center">@lang('message.login')</div>
                     <div class="card-body">
                         {!! Form::open(['route' => 'login', 'aria-lable' => trans('message.login')]) !!}
                             <div class="form-group row">
@@ -33,7 +33,7 @@
                             <div class="form-group row">
                                 <div class="col-md-6 offset-md-4">
                                     <div class="checkbox">
-                                        {!! Form::checkbox('remember', old('remember') ? 'checked' : ''); !!} {{ trans('message.remember-me') }}
+                                        {!! Form::checkbox('remember', old('remember') ? 'checked' : ''); !!} @lang('message.remember-me')
                                     </div>
                                 </div>
                             </div>
@@ -41,25 +41,25 @@
                                 <div class="col-md-6 offset-md-4">
                                     {!! Form::submit(trans('message.login'), ['class' => 'btn btn-primary']) !!}
                                     <a class="btn-link" href="{{ route('password.request') }}">
-                                        {{ trans('message.forget-password') }}
+                                        @lang('message.forget-password')
                                     </a>
                                 </div>
                             </div>
                         {!! Form::close() !!}
                         <div class="social text-center">
                             <div class="line"></div>
-                            <div class="line-center text-center">{{ trans('message.or') }}</div>
+                            <div class="line-center text-center">@lang('message.or')</div>
                             <div class="line"></div>
                         </div>
                         <div class="login-social">
-                            {!! Form::open(['url' => '#', 'method' => 'get']) !!}
-                                {!! Form::button('<i class="fas fa-facebook"></i>'.trans('message.login-with').' Facebook', ['type' => 'submit', 'class' => 'btn btn-social facebook']) !!}
+                            {!! Form::open(['route' => ['social-login', 'facebook'], 'method' => 'get']) !!}
+                            {!! Form::button('<i class="fa fa-facebook"></i>  '.trans('message.login-with').' Facebook', ['type' => 'submit', 'class' => 'btn btn-social facebook']) !!}
                             {!! Form::close() !!}
-                            {!! Form::open(['url' => '#', 'method' => 'get']) !!}
-                                {!! Form::button('<i class="fas fa-twitter"></i>'.trans('message.login-with').' Twitter', ['type' => 'submit', 'class' => 'btn btn-social google']) !!}
+                            {!! Form::open(['route' => ['social-login', 'twitter'], 'method' => 'get']) !!}
+                            {!! Form::button('<i class="fa fa-twitter"></i>  '.trans('message.login-with').' Twitter', ['type' => 'submit', 'class' => 'btn btn-social google']) !!}
                             {!! Form::close() !!}
-                            {!! Form::open(['url' => '#', 'method' => 'get']) !!}
-                                {!! Form::button('<i class="fas fa-google"></i>'.trans('message.login-with').' Google', ['type' => 'submit', 'class' => 'btn btn-social twitter']) !!}
+                            {!! Form::open(['route' => ['social-login', 'google'], 'method' => 'get']) !!}
+                            {!! Form::button('<i class="fa fa-google"></i>  '.trans('message.login-with').' Google', ['type' => 'submit', 'class' => 'btn btn-social twitter']) !!}
                             {!! Form::close() !!}
                         </div>
                     </div>

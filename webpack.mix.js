@@ -17,6 +17,7 @@ mix.js('resources/assets/js/app.js', 'public/js')
     .sass('node_modules/font-awesome/scss/font-awesome.scss', 'public/css')
     .version();
 mix.js('resources/assets/js/main.js', 'public/js/main.js')
+mix.js('resources/assets/js/main2.js', 'public/js/main2.js')
 mix.styles([
     'resources/assets/css/main.css',
     'resources/assets/css/main2.css'

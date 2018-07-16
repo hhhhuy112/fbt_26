@@ -79,11 +79,11 @@
 }
 
 .twitter {
-    background-color: #55ACEE;
+    background-color: #dd4b39;
 }
 
 .google {
-    background-color: #dd4b39;
+    background-color: #55ACEE;
 }
 
 .tour {
@@ -227,3 +227,5 @@ img {
 .img-header {
     height: 170px;
 }
+
+

@@ -18,8 +18,14 @@ class TourController extends Controller
         return view('home', compact('tours'));
     }
 
-    public function create()
+    public function show(Tour $tour)
     {
-        return view('tours.create');
+        $activities = $tour->activities;
+        $packages = $tour->packages;
+        $packagesList = $tour->packages->pluck('name', 'discount');
+        $average_rating = $tour->ratings->avg('value');
+        $total_reviews = $tour->reviews->count('id');
+
+        return view('tours.show', compact('tour', 'activities', 'packages', 'packagesList', 'average_rating', 'total_reviews'));
     }
 }

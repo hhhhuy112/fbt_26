@@ -59,9 +59,17 @@ return [
     'booking' => 'Booking',
     'review' => 'Review',
     'date-booking' => 'Booking date',
-    'passengers-booking' => 'Number of Passengers',
+    'capacity' => 'Capacity',
     'package-option' => 'Package Option',
     'total' => 'Total Price',
     'review' => 'Reviews',
-    'per-person' => 'Per Person'
+    'per-person' => 'Per Person',
+    'tour-name' => 'Tour',
+    'cancel' => 'Cancel',
+    'delete' => 'Delete',
+    'edit-mytravel' => 'Edit my travel',
+    'cancel-list' => 'My cancelled travel',
+    'view-cancel' => 'View my cancelled travel',
+    'back-travel' => 'Back to my travel',
+    'restore' => 'Restore'
 ];

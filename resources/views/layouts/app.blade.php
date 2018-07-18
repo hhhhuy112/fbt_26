@@ -39,7 +39,7 @@
                                     <a class="dropdown-item" href="{{ route('user.show', Auth::user()->id) }}">
                                         @lang('message.profile')
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}">
+                                    <a class="dropdown-item" href="{{ route('booking.index') }}">
                                         @lang('message.mytravel')
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" id="logout">
@@ -57,7 +57,8 @@
         @yield('content')
     </div>
     {{ Html::script(asset('js/app.js')) }}
-    {{ Html::script(asset('js/main.js')) }}
-    {{ Html::script(asset('js/main2.js')) }}
+    {{ Html::script(asset('js/home.js')) }}
+    {{ Html::script(asset('js/tour.js')) }}
+    {{ Html::script(asset('js/booking.js')) }}
 </body>
 </html>

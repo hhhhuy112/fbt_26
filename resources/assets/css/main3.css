@@ -1,0 +1,18 @@
+.table-booking th, td{
+    text-align: center;
+}
+
+.table-booking img {
+    margin: 0.25em;
+    width: 150px;
+}
+
+.container {
+    padding: 0;
+}
+
+.h2-booking {
+    font-size: 3em;
+    margin-top: 1.2em;
+    margin-bottom: .5em;
+}

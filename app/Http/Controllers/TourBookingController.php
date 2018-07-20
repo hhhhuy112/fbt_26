@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreBooking;
+use App\Repositories\Booking\BookingRepositoryInterface;
 
 class TourBookingController extends Controller
 {
-    public function __construct()
+    protected $bookingRepository;
+
+    public function __construct(BookingRepositoryInterface $bookingRepository)
     {
         $this->middleware('auth');
+        $this->bookingRepository = $bookingRepository;
     }
 
     public function store(StoreBooking $request, $tour_id)
@@ -19,9 +22,8 @@ class TourBookingController extends Controller
             'number_of_passengers',
             'grand_total'
         ]);
-        $booking['tour_id'] = $tour_id;
-        $request->user()->bookings()->create($booking);
+        $this->bookingRepository->storeBooking($request->user(), $tour_id, $booking);
 
-        return redirect()->route('tour.index');
+        return redirect()->route('tour.show', $tour_id);
     }
 }

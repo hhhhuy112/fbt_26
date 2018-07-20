@@ -71,5 +71,13 @@ return [
     'cancel-list' => 'My cancelled travel',
     'view-cancel' => 'View my cancelled travel',
     'back-travel' => 'Back to my travel',
-    'restore' => 'Restore'
+    'restore' => 'Restore',
+    'rate-tour' => 'Rate This Tour',
+    'post-review' => 'Post Your Review',
+    'your-review' => 'Your Review',
+    'by' => 'By: ',
+    'comment' => 'Comment',
+    'title-required' => 'The field title must be required',
+    'title.max'=> 'The title includes at most 255 characters',
+    'content-required' => 'The field content must be required',
 ];

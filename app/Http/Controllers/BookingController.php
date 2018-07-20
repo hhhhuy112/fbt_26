@@ -5,17 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tour;
 use App\Models\Booking;
+use App\Repositories\Booking\BookingRepositoryInterface;
+use App\Repositories\Tour\TourRepositoryInterface;
 
 class BookingController extends Controller
 {
-    public function __construct()
+    protected $bookingRepository;
+    protected $tourRepository;
+
+    public function __construct(BookingRepositoryInterface $bookingRepository, TourRepositoryInterface $tourRepository)
     {
         $this->middleware('auth');
+        $this->bookingRepository = $bookingRepository;
+        $this->tourRepository = $tourRepository;
     }
 
     public function index(Request $request)
     {
-        $bookings = $request->user()->bookings()->get();
+        $bookings = $this->bookingRepository->getBookingForUser($request->user());
+
         return view('bookings.index', compact('bookings'));
     }
 
@@ -24,15 +32,15 @@ class BookingController extends Controller
         $this->authorize('bookingUpdate', $booking);
         $this->authorize('matchUser', $booking);
 
-        $tour = Tour::find($booking->tour_id);
-        $packagesList = $tour->packages->pluck('name', 'discount');
+        $tour = $this->tourRepository->find($booking->tour_id);
+        $packagesList = $this->tourRepository->getPackageList($tour);
 
         return view('bookings.edit', compact('booking', 'tour', 'packagesList'));
     }
 
     public function update(Request $request, Booking $booking)
     {
-        $booking->update($request->all());
+        $this->bookingRepository->update($booking->id, $request->all());
 
         return redirect()->route('booking.index');
     }
@@ -42,37 +50,33 @@ class BookingController extends Controller
         $this->authorize('bookingUpdate', $booking);
         $this->authorize('matchUser', $booking);
 
-        $booking->forceDelete();
+        $this->bookingRepository->destroy($booking->id);
 
         return redirect()->route('booking.index');
     }
 
     public function cancel(Request $request, $id)
     {
-        $booking = Booking::findOrFail($id);
+        $booking = $this->bookingRepository->find($id);
 
         $this->authorize('bookingUpdate', $booking);
         $this->authorize('matchUser', $booking);
 
-        $booking->is_canceled = 1;
-        $booking->save();
-        $booking->delete();
+        $this->bookingRepository->cancel($id);
 
         return redirect()->route('booking.index');
     }
 
     public function canceledList(Request $request)
     {
-        $canceledList = Booking::onlyTrashed()
-            ->where('user_id', $request->user()->id)
-            ->get();
+        $canceledList = $this->bookingRepository->showCancelForUser($request->user());
 
         return view('bookings.cancel', compact('canceledList'));
     }
 
     public function restore(Request $request, $id)
     {
-        Booking::withTrashed()->findOrFail($id)->restore();
+        $this->bookingRepository->restorecCancel($id);
 
         return redirect()->route('booking.index');
     }

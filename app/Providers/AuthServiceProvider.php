@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Review;
+use App\Models\Tour;
+use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -25,6 +28,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('assess', function (User $user, Tour $tour) {
+            return $user->id == $tour->bookings->user_id;
+        });
     }
 }

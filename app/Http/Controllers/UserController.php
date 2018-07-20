@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Repositories\User\UserRepositoryInterface;
 
 class UserController extends Controller
 {
+    protected $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function show(User $user)
     {
         return view('profiles.show', compact('user'));
@@ -19,7 +27,7 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $user->update($request->all());
+        $this->userRepository->update($user->id, $request->all());
 
         return redirect()->route('user.show', $user->id)->with('user', $user);
     }

@@ -1,6 +1,9 @@
 <?php
 namespace App\Repositories;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
+
 abstract class EloquentRepository implements RepositoryInterface
 {
     protected $model;
@@ -31,8 +34,13 @@ abstract class EloquentRepository implements RepositoryInterface
 
     public function find($id)
     {
-        $result = $this->model->findOrFail($id);
-        return $result;
+        try {
+            $result = $this->model->findOrFail($id);
+
+            return $result;
+        } catch (\Exceptionn $exception) {
+            return response()->view('errors.404');
+        }
     }
 
     public function create(array $attributes)
@@ -43,22 +51,20 @@ abstract class EloquentRepository implements RepositoryInterface
     public function update($id, array $attributes)
     {
         $result = $this->find($id);
-        if ($result) {
+        try {
             $result->update($attributes);
-            return $result;
+        } catch (\Exception $exception) {
+            return response()->view('errors.404');
         }
-
-        return false;
     }
 
     public function delete($id)
     {
         $result = $this->find($id);
-        if ($result) {
+        try {
             $result->delete();
-            return true;
+        } catch (\Exception $exception) {
+            return response()->view('errors.404');
         }
-
-        return false;
     }
 }

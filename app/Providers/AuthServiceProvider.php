@@ -29,7 +29,14 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('assess', function (User $user, Tour $tour) {
-            return $user->id == $tour->bookings->user_id;
+            $bookingUsers = $tour->bookings->pluck('user_id');
+            foreach ($bookingUsers as $bookingUser) {
+                if ($user->id == $bookingUser) {
+                    return true;
+                }
+            }
+
+            return false;
         });
     }
 }

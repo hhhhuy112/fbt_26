@@ -49,4 +49,24 @@ class Tour extends Model
     {
         return $this->hasManyThrough('App\Models\Comment', 'App\Models\Review');
     }
+
+    public function scopeSearch($query, $column, $operator = '=', $value = null, $boolean = 'and')
+    {
+        if (is_array($column)) {
+            $query->where(function ($q) use ($column, $operator, $boolean) {
+                foreach ($column as $col => $value) {
+                    if (!is_null($value)) {
+                        $q->where($col, $operator, $value, $boolean);
+                    }
+                }
+            });
+        } elseif (!is_null($value)) {
+            $query->where($column, $operator, $value, $boolean);
+        }
+    }
+
+    public function scopeOrSearch($query, $column, $operator = '=', $value = null)
+    {
+        $query->search($column, $operator, $value, 'or');
+    }
 }

@@ -8,6 +8,7 @@
     <title>@lang('message.title')</title>
     {{ Html::style(asset('css/app.css')) }}
     {{ Html::style(asset('css/all.css')) }}
+    {{ Html::style(asset('css/main3.css')) }}
     {{ Html::style(asset('css/font-awesome.css')) }}
 </head>
 <body>
@@ -19,6 +20,9 @@
                 </a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a href="{{ route('tour.latest') }}" class="nav-link">@lang('message.latest-tour')</a></li>
+                        <li class="nav-item"><a href="{{ route('tour.best') }}" class="nav-link">@lang('message.best-tour')</a></li>
+                        <li class="nav-item"><a href="{{ route('tour.popular') }}" class="nav-link">@lang('message.popular-tour')</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">@lang('message.about')</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">@lang('message.contact')</a></li>
                     </ul>
@@ -60,5 +64,6 @@
     {{ Html::script(asset('js/home.js')) }}
     {{ Html::script(asset('js/tour.js')) }}
     {{ Html::script(asset('js/booking.js')) }}
+{{--    {{ Html::script(asset('js/review.js')) }}--}}
 </body>
 </html>

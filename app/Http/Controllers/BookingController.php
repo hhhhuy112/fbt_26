@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Models\Tour;
 use App\Models\Booking;
@@ -29,13 +30,16 @@ class BookingController extends Controller
 
     public function edit(Booking $booking)
     {
-        $this->authorize('bookingUpdate', $booking);
-        $this->authorize('matchUser', $booking);
+        try {
+            $this->authorize('bookingUpdate', $booking);
+            $this->authorize('matchUser', $booking);
+            $tour = $this->tourRepository->find($booking->tour_id);
+            $packagesList = $this->tourRepository->getPackageList($tour);
 
-        $tour = $this->tourRepository->find($booking->tour_id);
-        $packagesList = $this->tourRepository->getPackageList($tour);
-
-        return view('bookings.edit', compact('booking', 'tour', 'packagesList'));
+            return view('bookings.edit', compact('booking', 'tour', 'packagesList'));
+        } catch (AuthorizationException $exception) {
+            echo $exception->getMessage();
+        }
     }
 
     public function update(Request $request, Booking $booking)
@@ -47,24 +51,29 @@ class BookingController extends Controller
 
     public function destroy(Booking $booking)
     {
-        $this->authorize('bookingUpdate', $booking);
-        $this->authorize('matchUser', $booking);
+        try {
+            $this->authorize('bookingUpdate', $booking);
+            $this->authorize('matchUser', $booking);
+            $this->bookingRepository->destroy($booking->id);
 
-        $this->bookingRepository->destroy($booking->id);
-
-        return redirect()->route('booking.index');
+            return redirect()->route('booking.index');
+        } catch (AuthorizationException $exception) {
+            echo $exception->getMessage();
+        }
     }
 
     public function cancel(Request $request, $id)
     {
         $booking = $this->bookingRepository->find($id);
+        try {
+            $this->authorize('bookingUpdate', $booking);
+            $this->authorize('matchUser', $booking);
+            $this->bookingRepository->cancel($id);
 
-        $this->authorize('bookingUpdate', $booking);
-        $this->authorize('matchUser', $booking);
-
-        $this->bookingRepository->cancel($id);
-
-        return redirect()->route('booking.index');
+            return redirect()->route('booking.index');
+        } catch (AuthorizationException $exception) {
+            echo $exception->getMessage();
+        }
     }
 
     public function canceledList(Request $request)

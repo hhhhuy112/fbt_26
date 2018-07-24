@@ -20,5 +20,13 @@ interface TourRepositoryInterface
 
     public function rate(User $user, $id, $attribute);
 
-    public function review(User $user, $id, $attribute);
+    public function review(User $user, array $review);
+
+    public function showLatestTour();
+
+    public function showBestTour();
+
+    public function showPopularTour();
+
+    public function search($filters, $name);
 }

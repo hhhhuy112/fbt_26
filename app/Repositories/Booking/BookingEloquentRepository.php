@@ -31,11 +31,15 @@ class BookingEloquentRepository extends EloquentRepository implements BookingRep
 
     public function cancel($id)
     {
-        $booking = $this->find($id);
-        $booking->is_canceled = config('setting.yes');
-        $booking->save();
+        try {
+            $booking = $this->find($id);
+            $booking->is_canceled = config('setting.yes');
+            $booking->save();
 
-        return $booking->delete($id);
+            return $booking->delete($id);
+        } catch (\Exception $exception) {
+            return response()->view('errors.404');
+        }
     }
 
     public function getBookingForUser(User $user)
@@ -57,11 +61,15 @@ class BookingEloquentRepository extends EloquentRepository implements BookingRep
 
     public function restorecCancel($id)
     {
-        $booking = $this->find($id);
-        $booking->is_canceled = config('setting.no');
-        $booking->save();
+        try {
+            $booking = $this->find($id);
+            $booking->is_canceled = config('setting.no');
+            $booking->save();
 
-        return Booking::withTrashed()->findOrFail($id)->restore();
+            return Booking::withTrashed()->findOrFail($id)->restore();
+        } catch (\Exception $exception) {
+            return response()->view('errors.404');
+        }
     }
 
     public function storeBooking(User $user, $id, array $booking)

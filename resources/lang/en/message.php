@@ -80,4 +80,13 @@ return [
     'title-required' => 'The field title must be required',
     'title.max'=> 'The title includes at most 255 characters',
     'content-required' => 'The field content must be required',
+    'latest-tour' => 'Latest Tour',
+    'best-tour' => 'Best Tour',
+    'popular-tour' => 'Popular Tour',
+    'already-rate' => 'You has already rated this tour',
+    'already-review' => 'You has already reviewed this tour',
+    'must-book-to-rate' => 'You must book this tour to rate',
+    'must-book-to-review' => 'You must book this tour to review',
+    'no-results' => 'No results found.',
+    'wrong' => 'Something went wrong.',
 ];

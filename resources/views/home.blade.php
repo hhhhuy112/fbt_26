@@ -5,6 +5,7 @@
     <div class="row content">
         @include('layouts.sidebar')
         <div class="col-sm-9">
+            <div class="alert alert-info">{{ session('no_tours') }}</div>
             <div class="row content" id="list-tours">
                 @foreach ($tours as $tour)
                     <div class="col-sm-5 tour" >
@@ -25,7 +26,7 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                    @endforeach
             </div>
             <div class="row justify-content-center">
                 {{ $tours->links() }}

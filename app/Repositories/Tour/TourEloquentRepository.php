@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories\Tour;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Tour;
 use App\Repositories\EloquentRepository;
@@ -60,9 +61,38 @@ class TourEloquentRepository extends EloquentRepository implements TourRepositor
         ]);
     }
 
-    public function review(User $user, $id, $review)
+    public function review(User $user, array $review)
     {
-        $review['tour_id'] = $id;
         return $user->reviews()->create($review);
+    }
+
+    public function showLatestTour()
+    {
+        return Tour::latest('start_date')
+            ->paginate(config('setting.perpage'));
+    }
+
+    public function showBestTour()
+    {
+        return Tour::join('ratings', 'ratings.tour_id', '=', 'tours.id')
+            ->select(DB::raw('avg(value) as average, tours.*'))
+            ->groupBy('tours.id')
+            ->orderBy('average', 'desc')
+            ->paginate(config('setting.perpage'));
+    }
+
+    public function showPopularTour()
+    {
+        return Tour::withCount('bookings')
+            ->orderBy('bookings_count', 'desc')
+            ->paginate(config('setting.perpage'));
+    }
+
+    public function search($filters, $name_itinerary)
+    {
+        return Tour::search($filters, '>=')
+            ->search('name', 'like', '%' . $name_itinerary . '%')
+            ->orSearch('itinerary', 'like', '%' . $name_itinerary . '%')
+            ->paginate(config('setting.perpage'));
     }
 }

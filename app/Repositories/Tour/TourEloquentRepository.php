@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Tour;
 use App\Repositories\EloquentRepository;
+use Illuminate\Support\Facades\Redirect;
 
 class TourEloquentRepository extends EloquentRepository implements TourRepositoryInterface
 {
@@ -61,8 +62,9 @@ class TourEloquentRepository extends EloquentRepository implements TourRepositor
         ]);
     }
 
-    public function review(User $user, array $review)
+    public function review(User $user, $id, $review)
     {
+        $review['tour_id'] = $id;
         return $user->reviews()->create($review);
     }
 
@@ -94,5 +96,50 @@ class TourEloquentRepository extends EloquentRepository implements TourRepositor
             ->search('name', 'like', '%' . $name_itinerary . '%')
             ->orSearch('itinerary', 'like', '%' . $name_itinerary . '%')
             ->paginate(config('setting.perpage'));
+    }
+
+    public function storeTour($image, $tour)
+    {
+        $fileExtension = $image->getClientOriginalExtension();
+        $fileName = time() . '.' . $fileExtension;
+        $image->move(public_path('upload'), $fileName);
+        $tour['image'] = $fileName;
+
+        return Tour::create($tour);
+    }
+
+    public function update($id, array $attributes)
+    {
+        return parent::update($id, $attributes);
+    }
+
+    public function updateTour($image, $tour, $id)
+    {
+        $fileExtension = $image->getClientOriginalExtension();
+        $fileName = time() . '.' . $fileExtension;
+        $image->move(public_path('upload'), $fileName);
+        $tour['image'] = $fileName;
+
+        return $this->update($id, $tour);
+    }
+
+    public function delete($id)
+    {
+        return parent::delete($id);
+    }
+
+    public function revenue($month, $year)
+    {
+        return Tour::join('bookings', 'bookings.tour_id', '=', 'tours.id')
+            ->select(DB::raw('sum(grand_total) as income, tours.name, tours.id'))
+            ->groupBy('tours.id')
+            ->whereMonth('start_date', $month)
+            ->whereYear('start_date', $year)
+            ->get();
+    }
+
+    public function searchName($name)
+    {
+        return Tour::search('name', 'like', '%' . $name . '%')->paginate(config('setting.perpage'));
     }
 }

@@ -77,4 +77,9 @@ class BookingEloquentRepository extends EloquentRepository implements BookingRep
         $booking['tour_id'] = $id;
         return $user->bookings()->create($booking);
     }
+
+    public function getAll()
+    {
+        return Booking::with(['user', 'tour'])->paginate(config('setting.perpage'));
+    }
 }

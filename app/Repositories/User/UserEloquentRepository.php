@@ -14,4 +14,9 @@ class UserEloquentRepository extends EloquentRepository implements UserRepositor
     {
         return parent::update($id, $attributes);
     }
+
+    public function paginate($limit)
+    {
+        return parent::paginate($limit);
+    }
 }

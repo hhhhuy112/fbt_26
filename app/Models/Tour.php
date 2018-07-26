@@ -13,6 +13,7 @@ class Tour extends Model
         'start_date',
         'price',
         'description',
+        'image',
     ];
 
     public function packages()

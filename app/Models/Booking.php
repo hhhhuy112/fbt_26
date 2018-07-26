@@ -17,7 +17,6 @@ class Booking extends Model
         'number_of_passengers',
         'grand_total',
         'booking_date',
-        'status',
     ];
 
     public function user()
